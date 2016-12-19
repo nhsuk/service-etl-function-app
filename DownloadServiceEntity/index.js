@@ -1,8 +1,6 @@
 const request = require('request');
 
 module.exports = function (context, myQueueItem) {
-  context.log('JavaScript queue trigger function processed work item', myQueueItem);
-
   const url = myQueueItem;
 
   request(url, (err, res, body) => {
