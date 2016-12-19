@@ -9,7 +9,7 @@ module.exports = function (context, odsDataFile) {
             'orgType': 'pharmacy',
             });
     });
-    
+
     context.bindings.odsCodes = odsCodes;
     context.log(`A total of: ${odsCodes.length} ods codes have been sent to the queue.`);
 
