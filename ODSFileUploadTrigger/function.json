@@ -1,0 +1,19 @@
+{
+  "bindings": [
+    {
+      "type": "blobTrigger",
+      "name": "odaDataFile",
+      "path": "input-ods-data",
+      "connection": "c2s_STORAGE",
+      "direction": "in"
+    },
+    {
+      "type": "queue",
+      "name": "odsCodes",
+      "queueName": "ods-org-codes",
+      "connection": "c2s_STORAGE",
+      "direction": "out"
+    }
+  ],
+  "disabled": false
+}

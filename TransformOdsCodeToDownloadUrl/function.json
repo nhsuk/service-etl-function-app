@@ -1,0 +1,19 @@
+{
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "ods-org-codes",
+      "connection": "c2s_STORAGE"
+    },
+    {
+      "type": "queue",
+      "name": "toDownload",
+      "queueName": "to-download",
+      "connection": "c2s_STORAGE",
+      "direction": "out"
+    }
+  ],
+  "disabled": false
+}

@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "to-download",
+      "connection": "c2s_STORAGE"
+    }
+  ],
+  "disabled": false
+}
