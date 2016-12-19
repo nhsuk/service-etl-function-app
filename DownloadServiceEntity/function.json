@@ -5,13 +5,13 @@
       "type": "queueTrigger",
       "direction": "in",
       "queueName": "to-download",
-      "connection": "c2s_STORAGE"
+      "connection": "connecting-to-services_STORAGE"
     },
     {
       "type": "queue",
       "name": "rawOrg",
       "queueName": "raw-orgs",
-      "connection": "c2s_STORAGE",
+      "connection": "connecting-to-services_STORAGE",
       "direction": "out"
     }
   ],

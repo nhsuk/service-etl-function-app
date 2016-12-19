@@ -1,8 +1,9 @@
 module.exports = function (context, myQueueItem) {
   const rawOrg = myQueueItem;
 
-  // TODO: Clean up the data
+  context.log('Placeholder for some data transformation.');
+  // TODO: Clean up/transform the data
 
-  context.log('Placeholder for some data transformation. Just pushing it onto the queue for insertion...');
+  context.bindings.org = rawOrg;
   context.done();
 };

@@ -5,13 +5,13 @@
       "type": "queueTrigger",
       "direction": "in",
       "queueName": "ods-org-codes",
-      "connection": "c2s_STORAGE"
+      "connection": "connecting-to-services_STORAGE"
     },
     {
       "type": "queue",
       "name": "toDownload",
       "queueName": "to-download",
-      "connection": "c2s_STORAGE",
+      "connection": "connecting-to-services_STORAGE",
       "direction": "out"
     }
   ],

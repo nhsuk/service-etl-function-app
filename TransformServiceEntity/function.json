@@ -5,13 +5,15 @@
       "type": "queueTrigger",
       "direction": "in",
       "queueName": "raw-orgs",
-      "connection": "c2s_STORAGE"
+      "connection": "connecting-to-services_STORAGE"
     },
     {
-      "type": "queue",
+      "type": "documentDB",
       "name": "org",
-      "queueName": "transformed-orgs",
-      "connection": "c2s_STORAGE",
+      "databaseName": "services",
+      "collectionName": "services",
+      "createIfNotExists": true,
+      "connection": "connecting-to-services_DOCUMENTDB",
       "direction": "out"
     }
   ],
