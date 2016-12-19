@@ -1,0 +1,19 @@
+{
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "raw-orgs",
+      "connection": "c2s_STORAGE"
+    },
+    {
+      "type": "queue",
+      "name": "org",
+      "queueName": "transformed-orgs",
+      "connection": "c2s_STORAGE",
+      "direction": "out"
+    }
+  ],
+  "disabled": false
+}
