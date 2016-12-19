@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/nhsuk/service-etl-function-app/issues"
   },
-  "homepage": "https://github.com/nhsuk/service-etl-function-app#readme"
+  "homepage": "https://github.com/nhsuk/service-etl-function-app#readme",
+  "dependencies": {
+    "request": "^2.79.0"
+  }
 }

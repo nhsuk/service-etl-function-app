@@ -1,5 +1,5 @@
 module.exports = function (context, odsDataFile) {
-    context.log("JavaScript blob trigger function processed blob \n Name:", context.bindingData.odaDataFile, "\n Blob Size:", odsDataFile.length, "Bytes");
+    context.log('JavaScript blob trigger function processed blob \n Name:', context.bindingData.odaDataFile, '\n Blob Size:', odsDataFile.length, 'Bytes');
 
     const odsCodes = [];
 
