@@ -11,7 +11,7 @@ module.exports = function (context, myQueueItem) {
       context.bindings.rawOrg = JSON.parse(body);
       context.done();
     } else {
-      context.done(`Non 200 response encountered during download of \n URL: ${URL}`);
+      context.done(`Non 200 response encountered during download of \n URL: ${url}`);
     }
   });
 };
