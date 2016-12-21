@@ -4,7 +4,7 @@
       "name": "myQueueItem",
       "type": "queueTrigger",
       "direction": "in",
-      "queueName": "raw-orgs",
+      "queueName": "3-downloaded",
       "connection": "connecting-to-services_STORAGE"
     },
     {

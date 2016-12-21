@@ -10,7 +10,7 @@
     {
       "type": "queue",
       "name": "odsCodes",
-      "queueName": "ods-org-codes",
+      "queueName": "1-ods-codes",
       "connection": "connecting-to-services_STORAGE",
       "direction": "out"
     }

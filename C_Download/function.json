@@ -4,13 +4,13 @@
       "name": "myQueueItem",
       "type": "queueTrigger",
       "direction": "in",
-      "queueName": "ods-org-codes",
+      "queueName": "2-awaiting-download",
       "connection": "connecting-to-services_STORAGE"
     },
     {
       "type": "queue",
-      "name": "toDownload",
-      "queueName": "to-download",
+      "name": "rawOrg",
+      "queueName": "3-downloaded",
       "connection": "connecting-to-services_STORAGE",
       "direction": "out"
     }
