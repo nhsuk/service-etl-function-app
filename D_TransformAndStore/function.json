@@ -8,6 +8,13 @@
       "connection": "connecting-to-services_STORAGE"
     },
     {
+      "type": "queue",
+      "name": "orgId",
+      "queueName": "4-stored-docdb",
+      "connection": "connecting-to-services_STORAGE",
+      "direction": "out"
+    },
+    {
       "type": "documentDB",
       "name": "org",
       "databaseName": "services",
