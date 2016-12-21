@@ -5,8 +5,10 @@ module.exports = function (context, odsDataFile) {
 
   odsDataFile.split('\n').map((line) => {
     const columns = line.split(',');
+    const active = columns[12];
+    const orgSubType = columns[13];
 
-    if (columns[12] === 'A') {
+    if (active === 'A' && orgSubType === 1) {
       odsCodes.push({
         'odsCode': columns[0],
         'orgType': 'pharmacy',
