@@ -8,7 +8,7 @@ module.exports = function (context, odsDataFile) {
     const active = columns[12];
     const orgSubType = columns[13];
 
-    if (active === 'A' && orgSubType === 1) {
+    if (active === 'A' && orgSubType === '1') {
       odsCodes.push({
         'odsCode': columns[0],
         'orgType': 'pharmacy',
