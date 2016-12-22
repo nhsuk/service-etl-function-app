@@ -3,7 +3,7 @@
     {
       "name": "odsCodesPartTwo",
       "type": "blobTrigger",
-      "path": "split-ods/{name}.txt",
+      "path": "split-ods/odsCodesPartTwo.txt",
       "direction": "in",
       "connection": "connecting-to-services_STORAGE"
     },
