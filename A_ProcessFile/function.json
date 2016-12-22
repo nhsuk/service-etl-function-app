@@ -1,23 +1,23 @@
 {
   "bindings": [
     {
+      "name": "odsDataFile",
       "type": "blobTrigger",
-      "name": "odaDataFile",
+      "direction": "in",
       "path": "input-ods-data",
-      "connection": "connecting-to-services_STORAGE",
-      "direction": "in"
-    },
-    {
-      "type": "blob",
-      "name": "odsCodesPartTwo",
-      "path": "split-ods/odsCodesPartTwo.txt",
-      "connection": "connecting-to-services_STORAGE",
-      "direction": "out"
+      "connection": "connecting-to-services_STORAGE"
     },
     {
       "type": "blob",
       "name": "odsCodesPartOne",
       "path": "split-ods/odsCodesPartOne.txt",
+      "connection": "connecting-to-services_STORAGE",
+      "direction": "out"
+    },
+    {
+      "type": "blob",
+      "name": "odsCodesPartTwo",
+      "path": "split-ods/odsCodesPartTwo.txt",
       "connection": "connecting-to-services_STORAGE",
       "direction": "out"
     }
