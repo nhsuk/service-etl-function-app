@@ -1,7 +1,5 @@
  // eslint-disable-next-line func-names
 module.exports = function (context, odsDataFile) {
-  context.log(context);
-
   const odsCodesPartOne = [];
   const odsCodesPartTwo = [];
 
