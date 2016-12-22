@@ -10,14 +10,14 @@
     {
       "type": "blob",
       "name": "odsCodesPartTwo",
-      "path": "split-ods/{name}.txt",
+      "path": "split-ods/odsCodesPartTwo.txt",
       "connection": "connecting-to-services_STORAGE",
       "direction": "out"
     },
     {
       "type": "blob",
       "name": "odsCodesPartOne",
-      "path": "split-ods/{name}.txt",
+      "path": "split-ods/odsCodesPartOne.txt",
       "connection": "connecting-to-services_STORAGE",
       "direction": "out"
     }

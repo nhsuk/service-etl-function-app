@@ -6,7 +6,7 @@ module.exports = function (context, odsDataFile) {
   const odsCodesPartTwo = [];
 
   const lines = odsDataFile.split('\n');
-  const halfWay = Math.round(lines / 2);
+  const halfWay = Math.round(lines.length / 2);
   let i;
 
   context.log('halfWay: ' + halfWay);
@@ -29,12 +29,12 @@ module.exports = function (context, odsDataFile) {
   }
 
   /* eslint-disable no-param-reassign */
-  context.bindings.odsCodePartOne = odsCodesPartOne;
-  context.bindings.odsCodePartTwo = odsCodesPartTwo;
+  context.bindings.odsCodesPartOne = odsCodesPartOne;
+  context.bindings.odsCodesPartTwo = odsCodesPartTwo;
   /* eslint-enable no-param-reassign */
 
   const totalItems = odsCodesPartOne.length + odsCodesPartTwo.length;
-  context.log(`A total of: ${totalItems.length} ods codes have been sent to the queue.`);
+  context.log(`A total of: ${totalItems} ods codes have been sent to the queue.`);
 
   context.done();
 };
