@@ -1,16 +1,16 @@
 {
   "bindings": [
     {
-      "name": "odsOrg",
-      "type": "queueTrigger",
+      "name": "odsCodesPartTwo",
+      "type": "blobTrigger",
+      "path": "split-ods/{name}.txt",
       "direction": "in",
-      "queueName": "1-ods-codes",
       "connection": "connecting-to-services_STORAGE"
     },
     {
       "type": "queue",
       "name": "toDownload",
-      "queueName": "2-awaiting-download",
+      "queueName": "1-ods-codes",
       "connection": "connecting-to-services_STORAGE",
       "direction": "out"
     }

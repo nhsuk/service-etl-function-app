@@ -1,5 +1,6 @@
 const request = require('request');
 
+ // eslint-disable-next-line func-names
 module.exports = function (context, myQueueItem) {
   const url = myQueueItem;
 
@@ -8,6 +9,7 @@ module.exports = function (context, myQueueItem) {
       context.log(`Download of ${url} encountered an error: ${err}`);
       context.done(err);
     } else if (res.statusCode === 200) {
+      // eslint-disable-next-line no-param-reassign
       context.bindings.rawOrg = JSON.parse(body);
       context.done();
     } else {

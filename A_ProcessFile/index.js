@@ -1,23 +1,40 @@
+ // eslint-disable-next-line func-names
 module.exports = function (context, odsDataFile) {
-  context.log('JavaScript blob trigger function processed blob \n Name:', context.bindingData.odaDataFile, '\n Blob Size:', odsDataFile.length, 'Bytes');
+  context.log(context);
 
-  const odsCodes = [];
+  const odsCodesPartOne = [];
+  const odsCodesPartTwo = [];
 
-  odsDataFile.split('\n').map((line) => {
-    const columns = line.split(',');
+  const lines = odsDataFile.split('\n');
+  const halfWay = Math.round(lines / 2);
+  let i;
+
+  context.log('halfWay: ' + halfWay);
+  for (i = 0; i < lines.length; i++) {
+    const columns = lines[i].split(',');
     const active = columns[12];
     const orgSubType = columns[13];
 
     if (active === 'A' && orgSubType === '1') {
-      odsCodes.push({
-        'odsCode': columns[0],
-        'orgType': 'pharmacy',
-      });
-    }
-  });
+      const org = { odsCode: columns[0], orgType: 'pharmacy' };
 
-  context.bindings.odsCodes = odsCodes;
-  context.log(`A total of: ${odsCodes.length} ods codes have been sent to the queue.`);
+      if (i < halfWay) {
+        context.log('First half' + org);
+        odsCodesPartOne.push(org);
+      } else {
+        context.log('Second half' + org);
+        odsCodesPartTwo.push(org);
+      }
+    }
+  }
+
+  /* eslint-disable no-param-reassign */
+  context.bindings.odsCodePartOne = odsCodesPartOne;
+  context.bindings.odsCodePartTwo = odsCodesPartTwo;
+  /* eslint-enable no-param-reassign */
+
+  const totalItems = odsCodesPartOne.length + odsCodesPartTwo.length;
+  context.log(`A total of: ${totalItems.length} ods codes have been sent to the queue.`);
 
   context.done();
 };
