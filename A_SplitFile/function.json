@@ -4,20 +4,20 @@
       "name": "odsDataFile",
       "type": "blobTrigger",
       "direction": "in",
-      "path": "input-ods-data",
+      "path": "ods-input",
       "connection": "connecting-to-services_STORAGE"
     },
     {
       "type": "blob",
       "name": "odsCodesPartOne",
-      "path": "split-ods/odsCodesPartOne.txt",
+      "path": "ods-split/odsCodesPartOne.txt",
       "connection": "connecting-to-services_STORAGE",
       "direction": "out"
     },
     {
       "type": "blob",
       "name": "odsCodesPartTwo",
-      "path": "split-ods/odsCodesPartTwo.txt",
+      "path": "ods-split/odsCodesPartTwo.txt",
       "connection": "connecting-to-services_STORAGE",
       "direction": "out"
     }
