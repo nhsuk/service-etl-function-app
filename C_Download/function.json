@@ -9,8 +9,22 @@
     },
     {
       "type": "queue",
-      "name": "rawOrg",
-      "queueName": "3-downloaded",
+      "name": "org",
+      "queueName": "3-downloaded-200",
+      "connection": "connecting-to-services_STORAGE",
+      "direction": "out"
+    },
+    {
+      "type": "queue",
+      "name": "notFound",
+      "queueName": "3-downloaded-404",
+      "connection": "connecting-to-services_STORAGE",
+      "direction": "out"
+    },
+    {
+      "type": "queue",
+      "name": "errored",
+      "queueName": "3-downloaded-500",
       "connection": "connecting-to-services_STORAGE",
       "direction": "out"
     }

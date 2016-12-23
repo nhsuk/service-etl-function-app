@@ -4,7 +4,7 @@
       "name": "rawOrg",
       "type": "queueTrigger",
       "direction": "in",
-      "queueName": "3-downloaded",
+      "queueName": "3-downloaded-200",
       "connection": "connecting-to-services_STORAGE"
     },
     {
