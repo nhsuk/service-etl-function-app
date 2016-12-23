@@ -10,15 +10,28 @@ which is available from [GP and GP practice related data](https://digital.nhs.uk
 
 ## Work flow
 
-The work flow is to extract the ODS codes from the file and add them to a queue.
-Once on the queue they are picked up and assessed to understand which data-source
-the wider set of data should be retreieved from. This varies based on the org type
-which is part of the message.
-During the data source assessment the URL required to download the resource
-from is constructed and placed on another queue. That queue 'the to download'
-queue is picked up by a function dedicated to downloading resources.
-As the resources are downloaded they are placed on another queue where they will
-be picked up from by a function whose job it is to transform the raw resource
-into a consistent model that is placed on another queue.
-The final queue. Each item on the queue will be written to a document DB instance.
+Briefly, the flow of the application is:
 
+1. When a file containing ODS codes is uploaded to blob storage
+1. Extract the ODS codes
+1. Based on the type of org, work out the best source of data
+1. Download the data
+1. Store the data
+
+## Monitoring
+
+There are many information points available in order to understand and monitor
+what is happening with during the execution of the functions. I have found a
+good place to start is the live monitoring web page for each of the functions.
+
+Every function has a page that is accessed by replacing the name of the app
+and the name of the function with the one wishing to be monitored. For example
+https://support-bay.scm.azurewebsites.net/Support.functionsmetrics/#/services-etl/A_SplitFile
+is a page to monitor the function `A_SplitFile`.
+
+In addition to the live execution metric page, logs are available at
+https://{app-name}.scm.azurewebsites.net/api/logstream where `{app-name}` is
+the name of the function app.
+
+It is also worth checking the queues to see how things are progressing. One
+way the queues are can monitored is through the [Azure Storage Explorer](http://storageexplorer.com/).
