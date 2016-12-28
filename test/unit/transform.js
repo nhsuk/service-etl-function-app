@@ -9,7 +9,7 @@ describe('Transform', () => {
     contacts: { telephoneNumber: '01234567890' },
   };
 
-  describe('identifier actions', () => {
+  describe('identifier behaviour', () => {
     it('should copy the identifier to the id property', () => {
       const transformedOrg = transform(baseOrg);
 
@@ -22,8 +22,7 @@ describe('Transform', () => {
 
   describe('telephoneNumber formatting', () => {
     it('should format a mobile telephoneNumber', () => {
-      const mobilePhoneNumber = '07700900075';
-      baseOrg.contacts.telephoneNumber = mobilePhoneNumber;
+      baseOrg.contacts.telephoneNumber = '07700900075';
 
       const transformedOrg = transform(baseOrg);
 
@@ -31,8 +30,7 @@ describe('Transform', () => {
     });
 
     it('should format a freephone telephoneNumber', () => {
-      const freePhoneNumber = '08081570773';
-      baseOrg.contacts.telephoneNumber = freePhoneNumber;
+      baseOrg.contacts.telephoneNumber = '08081570773';
 
       const transformedOrg = transform(baseOrg);
 
@@ -40,8 +38,7 @@ describe('Transform', () => {
     });
 
     it('should format a premium rate telephoneNumber', () => {
-      const premiumRatePhoneNumber = '09098790529';
-      baseOrg.contacts.telephoneNumber = premiumRatePhoneNumber;
+      baseOrg.contacts.telephoneNumber = '09098790529';
 
       const transformedOrg = transform(baseOrg);
 
@@ -49,8 +46,7 @@ describe('Transform', () => {
     });
 
     it('should format a London telephoneNumber', () => {
-      const londonPhoneNumber = '02079460628';
-      baseOrg.contacts.telephoneNumber = londonPhoneNumber;
+      baseOrg.contacts.telephoneNumber = '02079460628';
 
       const transformedOrg = transform(baseOrg);
 
@@ -58,12 +54,29 @@ describe('Transform', () => {
     });
 
     it('should format a UK wide telephoneNumber', () => {
-      const ukWidePhoneNumber = '03069990430';
-      baseOrg.contacts.telephoneNumber = ukWidePhoneNumber;
+      baseOrg.contacts.telephoneNumber = '03069990430';
 
       const transformedOrg = transform(baseOrg);
 
       expect(transformedOrg.contacts.telephoneNumber).to.equal('0306 999 0430');
+    });
+  });
+
+  describe('imperfect data', () => {
+    it('should not format the telephoneNumber when it is empty', () => {
+      baseOrg.contacts.telephoneNumber = '';
+
+      const transformedOrg = transform(baseOrg);
+
+      expect(transformedOrg.contacts.telephoneNumber).to.be.equal('');
+    });
+
+    it('should not format the telephoneNumber when it is null', () => {
+      baseOrg.contacts.telephoneNumber = null;
+
+      const transformedOrg = transform(baseOrg);
+
+      expect(transformedOrg.contacts.telephoneNumber).to.be.equal(null);
     });
   });
 });

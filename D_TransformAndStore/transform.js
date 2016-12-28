@@ -9,9 +9,12 @@ function transform(rawOrg) {
   /* eslint-disable no-param-reassign */
   rawOrg.id = rawOrg.identifier;
 
-  const pn = pnUtil.parse(rawOrg.contacts.telephoneNumber, 'GB');
+  const telephoneNumber = rawOrg.contacts.telephoneNumber;
 
-  rawOrg.contacts.telephoneNumber = pnUtil.format(pn, pnFormat.NATIONAL);
+  if (telephoneNumber) {
+    const pn = pnUtil.parse(rawOrg.contacts.telephoneNumber, 'GB');
+    rawOrg.contacts.telephoneNumber = pnUtil.format(pn, pnFormat.NATIONAL);
+  }
 
   return rawOrg;
 }
