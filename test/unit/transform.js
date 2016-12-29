@@ -63,12 +63,20 @@ describe('Transform', () => {
   });
 
   describe('imperfect data', () => {
-    it('should not format the telephoneNumber when it is empty', () => {
+    it('should set the telephoneNumber to null when it is empty', () => {
       baseOrg.contacts.telephoneNumber = '';
 
       const transformedOrg = transform(baseOrg);
 
-      expect(transformedOrg.contacts.telephoneNumber).to.be.equal('');
+      expect(transformedOrg.contacts.telephoneNumber).to.be.equal(null);
+    });
+
+    it('should set the telephoneNumber to null when it is only spaces', () => {
+      baseOrg.contacts.telephoneNumber = '                    ';
+
+      const transformedOrg = transform(baseOrg);
+
+      expect(transformedOrg.contacts.telephoneNumber).to.be.equal(null);
     });
 
     it('should not format the telephoneNumber when it is null', () => {

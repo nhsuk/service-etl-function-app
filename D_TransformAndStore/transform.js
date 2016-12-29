@@ -9,12 +9,15 @@ function transform(rawOrg) {
   /* eslint-disable no-param-reassign */
   rawOrg.id = rawOrg.identifier;
 
-  const telephoneNumber = rawOrg.contacts.telephoneNumber;
+  let updatedTelephoneNumber = null;
+  const rawTelephoneNumber = rawOrg.contacts.telephoneNumber;
 
-  if (telephoneNumber) {
-    const pn = pnUtil.parse(rawOrg.contacts.telephoneNumber, 'GB');
-    rawOrg.contacts.telephoneNumber = pnUtil.format(pn, pnFormat.NATIONAL);
+  if (rawTelephoneNumber !== null && rawTelephoneNumber.trim() !== '') {
+    const pn = pnUtil.parse(rawTelephoneNumber, 'GB');
+    updatedTelephoneNumber = pnUtil.format(pn, pnFormat.NATIONAL);
   }
+
+  rawOrg.contacts.telephoneNumber = updatedTelephoneNumber;
 
   return rawOrg;
 }
