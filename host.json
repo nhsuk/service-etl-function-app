@@ -1,6 +1,6 @@
 {
   "queues": {
-    "batchSize": 24,
+    "batchSize": 32,
     "maxDequeueCount": 5
   }
 }
