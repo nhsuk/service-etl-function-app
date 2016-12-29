@@ -2,6 +2,7 @@ const transform = require('./transform');
 
  // eslint-disable-next-line func-names
 module.exports = function (context, rawOrg) {
+  context.log(`Attempting to parse ${rawOrg.contacts.telephoneNumber}`);
   const org = transform(rawOrg);
 
   // Send id of org to queue for record of what has been saved to docDB
