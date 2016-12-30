@@ -1,5 +1,8 @@
 {
   "name": "service-etl-function-app",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "version": "0.0.1",
   "description": "",
   "main": "",
@@ -33,6 +36,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^3.12.2",
+    "eslint-config-airbnb-base": "^11.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-mocha": "^4.7.0",
