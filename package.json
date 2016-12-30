@@ -2,7 +2,7 @@
   "name": "service-etl-function-app",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "lint": "eslint --ext .js,.json .",
     "test": "mocha --recursive test",
@@ -11,13 +11,10 @@
     "check-coverage": "istanbul check-coverage --config .istanbul.yml",
     "watch-lint": "esw --watch .",
     "watch-test": "npm run test -- --watch --reporter min",
-    "git-hook": "npm run lint && npm run generate-coverage && npm run check-coverage"
-  },
-  "config": {
-    "ghooks": {
-      "pre-commit": "npm run git-hook",
-      "post-rewrite": "npm run git-hook"
-    }
+    "git-hook": "npm run lint && npm run generate-coverage && npm run check-coverage",
+    "precommit": "npm run git-hook",
+    "prepush": "npm run git-hook",
+    "postrewrite": "npm run git-hook"
   },
   "repository": {
     "type": "git",
@@ -39,7 +36,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-mocha": "^4.7.0",
-    "ghooks": "^2.0.0",
+    "husky": "^0.12.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0"
   }
