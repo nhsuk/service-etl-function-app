@@ -1,4 +1,4 @@
-functionName=services-etl-3
+functionName=services-etl-1
 baseName=`whoami`-dev-${functionName}
 resourceGroup=${baseName}
 region=uksouth

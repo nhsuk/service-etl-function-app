@@ -2,10 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-		"storage_connection_string": { 
-			"defaultValue": "blah",
-      "type": "String"
-    },
 		"github_repo": { 
 			"defaultValue": "service-etl-function-app",
       "type": "String"
@@ -18,14 +14,11 @@
   "variables": {
 		"basename": "[concat('nhsuk', '-', parameters('github_repo'), '-', parameters('branch'))]",
     "hash": "[uniqueString(resourceGroup().id, deployment().name)]",
-		"storageAccounts_name": "[concat('storage', variables('hash'))]",
+		"storageAccountName": "[concat('storage', variables('hash'))]",
 		"serverFarmsName":  "[concat('plan', variables('hash'))]",
 		"sites_name":  "[concat('site', variables('hash'))]",
 		"repoUrl": "[concat('https://github.com/nhsuk/', parameters('github_repo'), '.git')]",
-		"branch": "[parameters('branch')]",
-		"app_settings": {
-			"AZURE_STORAGE_CONNECTION_STRING": "[parameters('storage_connection_string')]"
-    }
+		"branch": "[parameters('branch')]"
   },
   "resources": [
     {
@@ -35,7 +28,7 @@
         "tier": "Standard"
       },
       "kind": "Storage",
-      "name": "[variables('storageAccounts_name')]",
+      "name": "[variables('storageAccountName')]",
       "apiVersion": "2016-01-01",
       "location": "uksouth",
       "tags": {},
@@ -115,7 +108,9 @@
 						"dependsOn": [
 								"[resourceId('Microsoft.Web/Sites', variables('sites_name') )]"
 						],
-						"properties": "[variables('app_settings')]"
+						"properties": {
+               "connecting-to-services_STORAGE": "[Concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]"
+            }
 				}
 			],
 			"dependsOn": [
