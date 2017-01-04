@@ -15,6 +15,8 @@
 		"basename": "[concat('nhsuk', '-', parameters('github_repo'), '-', parameters('branch'))]",
     "hash": "[uniqueString(resourceGroup().id, deployment().name)]",
 		"storageAccountName": "[concat('storage', variables('hash'))]",
+		"databaseAccountName": "[concat('database', variables('hash'))]",
+    "location": "[resourceGroup().location]",
 		"serverFarmsName":  "[concat('plan', variables('hash'))]",
 		"sites_name":  "[concat('site', variables('hash'))]",
 		"repoUrl": "[concat('https://github.com/nhsuk/', parameters('github_repo'), '.git')]",
@@ -30,7 +32,7 @@
       "kind": "Storage",
       "name": "[variables('storageAccountName')]",
       "apiVersion": "2016-01-01",
-      "location": "uksouth",
+      "location":  "[variables('location')]",
       "tags": {},
       "properties": {},
       "resources": [],
@@ -48,7 +50,7 @@
       "kind": "functionapp",
       "name": "[variables('serverFarmsName')]",
       "apiVersion": "2015-08-01",
-      "location": "UK South",
+      "location":  "[variables('location')]",
       "properties": {
         "name": "[variables('serverFarmsName')]",
         "numberOfWorkers": 0
@@ -57,11 +59,27 @@
       "dependsOn": []
     },
     {
+			"apiVersion": "2015-04-08",
+			"type": "Microsoft.DocumentDb/databaseAccounts",
+			"name": "[variables('databaseAccountName')]",
+      "location":  "[variables('location')]",
+			"properties": {
+				"databaseAccountOfferType": "Standard",
+				"ipRangeFilter": "",
+				"locations": [
+					{
+						"failoverPriority": 0,
+            "locationName":  "[variables('location')]"
+					}
+				]
+			}
+    },
+    {
 			"type": "Microsoft.Web/sites",
 			"kind": "functionapp",
 			"name": "[variables('sites_name')]",
-			"apiVersion": "2015-08-01",
-			"location": "UK South",
+			"apiVersion": "2016-03-01",
+      "location":  "[variables('location')]",
 			"properties": {
 				"name": "[variables('sites_name')]",
 				"hostNames": [
@@ -89,7 +107,7 @@
 			},
 			"resources": [
 				{
-					"apiVersion": "2015-04-01",
+					"apiVersion": "2016-03-01",
 					"name": "web",
 					"type": "sourcecontrols",
 					"dependsOn": [
@@ -102,13 +120,18 @@
 					}
 				},
 				{
-						"apiVersion": "2015-08-01",
+						"apiVersion": "2016-03-01",
 						"name": "appsettings",
 						"type": "config",
 						"dependsOn": [
 								"[resourceId('Microsoft.Web/Sites', variables('sites_name') )]"
 						],
 						"properties": {
+               "AzureWebJobsDashboard": "[Concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]",
+               "AzureWebJobsStorage": "[Concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]",
+               "WEBSITE_NODE_DEFAULT_VERSION": "6.5.0",
+               "FUNCTIONS_EXTENSION_VERSION": "~1",
+               "connecting-to-services_DOCUMENTDB": "[Concat('AccountEndpoint=https://', variables('databaseAccountName'), '.documents.azure.com:443/;AccountKey=', listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('databaseAccountName')), providers('Microsoft.DocumentDB', 'databaseAccounts').apiVersions[0]).secondaryMasterKey)]",
                "connecting-to-services_STORAGE": "[Concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]"
             }
 				}

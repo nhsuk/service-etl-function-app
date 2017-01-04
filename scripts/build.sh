@@ -1,5 +1,6 @@
-functionName=services-etl-1
-baseName=`whoami`-dev-${functionName}
+functionName=services-etl
+timeStamp=`date "+%Y%m%d%H%M%S"`
+baseName=`whoami`-dev-${functionName}-${timeStamp}
 resourceGroup=${baseName}
 region=uksouth
 
