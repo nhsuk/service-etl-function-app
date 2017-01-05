@@ -27,5 +27,3 @@ storageAccountConnectionString=`az storage account show-connection-string --reso
 # az storage container create --name ods-input --account-name $storageAccountName --account-key=$storageAccountKey
 
 AZURE_STORAGE_CONNECTION_STRING=${storageAccountConnectionString} az storage container create --name ods-input
-
-
