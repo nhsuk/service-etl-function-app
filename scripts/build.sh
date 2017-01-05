@@ -22,8 +22,5 @@ az group deployment create \
 storageAccountName=`az storage account list --resource-group ${resourceGroup} --output list --query '[].name'`
 storageAccountConnectionString=`az storage account show-connection-string --resource-group ${resourceGroup} --name ${storageAccountName} --query 'connectionString'`
 
-# storageAccountKey=`az storage account keys list --resource-group ${resourceGroup} --name ${storageAccountName} --query 'keys[0].value'`
-# This through an AccountName error - not sure why
-# az storage container create --name ods-input --account-name $storageAccountName --account-key=$storageAccountKey
-
-AZURE_STORAGE_CONNECTION_STRING=${storageAccountConnectionString} az storage container create --name ods-input
+az storage container create --name ods-input --connection-string=${storageAccountConnectionString}
+az storage container create --name ods-split --connection-string=${storageAccountConnectionString}
