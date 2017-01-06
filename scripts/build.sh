@@ -15,6 +15,7 @@ az group create \
   --location $region \
   --tags org=$currentOrg repo=$currentRepo branch=$currentBranch
 az group deployment create \
+  --name "scripted-deployment-${timeStamp}" \
   --resource-group $resourceGroup \
   --template-file ./template.json \
   --parameters "{ \"org\": { \"value\": \"$currentOrg\" }, \"repo\": { \"value\": \"$currentRepo\" } , \"branch\": { \"value\": \"$currentBranch\" } }"
