@@ -1,0 +1,29 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "variables": {
+    "serverFarmName": "c2s-plan-dev"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "sku": {
+        "name": "Y1",
+        "tier": "Dynamic",
+        "size": "Y1",
+        "family": "Y",
+        "capacity": 0
+      },
+      "name": "[variables('serverFarmName')]",
+      "apiVersion": "2015-08-01",
+      "location":  "[resourceGroup().location]",
+      "properties": {
+        "name": "[variables('serverFarmName')]",
+        "numberOfWorkers": 0
+      },
+      "resources": [],
+      "dependsOn": []
+    }
+  ]
+}

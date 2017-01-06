@@ -10,6 +10,12 @@
     },
 		"branch": {
 			"type": "string"
+		},
+		"plan-resource-group": {
+			"type": "string"
+		},
+		"plan-name": {
+			"type": "string"
 		}
   },
   "variables": {
@@ -17,10 +23,11 @@
 		"storageAccountName": "[concat('storage', variables('hash'))]",
 		"databaseAccountName": "[concat('database', variables('hash'))]",
     "location": "[resourceGroup().location]",
-		"serverFarmsName":  "[concat('plan', variables('hash'))]",
+		"serverFarmsName":  "c2s-plan-dev",
 		"sites_name":  "[concat('site', variables('hash'))]",
 		"repoUrl": "[concat('https://github.com/', parameters('org'), '/', parameters('repo'), '.git')]",
 		"branch": "[parameters('branch')]",
+    "commonPlanId": "[resourceId(parameters('plan-resource-group'), 'Microsoft.Web/serverFarms', parameters('plan-name'))]",
     "tags": {
       "org": "[parameters('org')]",
       "repo": "[parameters('repo')]",
@@ -40,27 +47,6 @@
       "location":  "[variables('location')]",
       "tags": "[variables('tags')]",
       "properties": {},
-      "resources": [],
-      "dependsOn": []
-    },
-    {
-      "type": "Microsoft.Web/serverfarms",
-      "sku": {
-        "name": "Y1",
-        "tier": "Dynamic",
-        "size": "Y1",
-        "family": "Y",
-        "capacity": 0
-      },
-      "kind": "functionapp",
-      "name": "[variables('serverFarmsName')]",
-      "apiVersion": "2015-08-01",
-      "location":  "[variables('location')]",
-      "properties": {
-        "name": "[variables('serverFarmsName')]",
-        "numberOfWorkers": 0
-      },
-      "tags": "[variables('tags')]",
       "resources": [],
       "dependsOn": []
     },
@@ -111,7 +97,7 @@
 						"ipBasedSslState": 0
 					}
 				],
-				"serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('serverFarmsName'))]"
+				"serverFarmId": "[variables('commonPlanId')]"
 			},
 			"resources": [
 				{
@@ -144,9 +130,7 @@
             }
 				}
 			],
-			"dependsOn": [
-				"[resourceId('Microsoft.Web/serverfarms', variables('serverFarmsName'))]"
-			]
+			"dependsOn": []
     }
   ]
 }
