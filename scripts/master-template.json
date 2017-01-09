@@ -1,0 +1,36 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "org": {
+      "type": "string"
+    },
+    "repo": { 
+      "type": "String"
+    },
+    "branch": {
+      "type": "string"
+    }
+  },
+  "variables": {  },
+  "resources": [
+    { 
+      "apiVersion": "2015-01-01", 
+      "name": "linkedTemplate", 
+      "type": "Microsoft.Resources/deployments", 
+      "properties": { 
+        "mode": "incremental", 
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/nhsuk/service-etl-function-app/feature/add-deployment-scripts/scripts/template.json",
+          "contentVersion": "1.0.0.0"
+        }, 
+        "parameters": { 
+          "org": {"value": "[parameters('org')]"},
+          "repo": {"value": "[parameters('repo')]"},
+          "branch": {"value": "[parameters('branch')]"}
+        } 
+      } 
+    }
+  ],
+  "outputs": {  }
+}

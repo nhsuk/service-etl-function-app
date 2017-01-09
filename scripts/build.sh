@@ -17,7 +17,7 @@ az group create \
 az group deployment create \
   --name "scripted-deployment-${timeStamp}" \
   --resource-group $resourceGroup \
-  --template-file ./template.json \
+  --template-file ./master-template.json \
   --parameters "{ \"org\": { \"value\": \"$currentOrg\" }, \"repo\": { \"value\": \"$currentRepo\" } , \"branch\": { \"value\": \"$currentBranch\" } }"
 
 storageAccountName=`az storage account list --resource-group ${resourceGroup} --output list --query '[].name'`
