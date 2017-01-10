@@ -9,12 +9,17 @@ currentBranchSanitised=`echo $currentBranch | sed 's/\//_/g'`
 
 resourceGroup=${currentOrg}.${currentRepo}.${currentBranchSanitised}.`whoami`
 
-echo "Creating infrastructure for ${currentOrg}/${currentRepo}/${currentBranch}" 
+if [ "`az group exists --name $resourceGroup`" != "true" ]
+then
+  echo "Creating resource group $resourceGroup in location $region" 
+	az group create \
+		--name $resourceGroup \
+		--location $region \
+		--tags org=$currentOrg repo=$currentRepo branch=$currentBranch
+fi
 
-az group create \
-  --name $resourceGroup \
-  --location $region \
-  --tags org=$currentOrg repo=$currentRepo branch=$currentBranch
+echo "Provisioning infrastructure for branch ${currentOrg}/${currentRepo}/${currentBranch}" 
+
 az group deployment create \
   --name "scripted-deployment-${timeStamp}" \
   --resource-group $resourceGroup \
