@@ -18,7 +18,7 @@
     "databaseAccountName": "[concat('database', variables('hash'))]",
     "location": "[resourceGroup().location]",
     "serverFarmsName":  "[concat('plan', variables('hash'))]",
-    "sites_name":  "[concat('site', variables('hash'))]",
+    "siteName":  "[concat('site', variables('hash'))]",
     "repoUrl": "[concat('https://github.com/', parameters('org'), '/', parameters('repo'), '.git')]",
     "branch": "[parameters('branch')]",
     "tags": {
@@ -84,28 +84,28 @@
     {
       "type": "Microsoft.Web/sites",
       "kind": "functionapp",
-      "name": "[variables('sites_name')]",
+      "name": "[variables('siteName')]",
       "apiVersion": "2016-03-01",
       "location":  "[variables('location')]",
       "tags": "[variables('tags')]",
       "properties": {
-        "name": "[variables('sites_name')]",
+        "name": "[variables('siteName')]",
         "hostNames": [
-          "[concat(variables('sites_name'),'.azurewebsites.net')]"
+          "[concat(variables('siteName'),'.azurewebsites.net')]"
         ],
         "enabledHostNames": [
-          "[concat(variables('sites_name'),'.azurewebsites.net')]",
-          "[concat(variables('sites_name'),'.scm.azurewebsites.net')]"
+          "[concat(variables('siteName'),'.azurewebsites.net')]",
+          "[concat(variables('siteName'),'.scm.azurewebsites.net')]"
         ],
         "hostNameSslStates": [
           {
-            "name": "[concat(variables('sites_name'),'.azurewebsites.net')]",
+            "name": "[concat(variables('siteName'),'.azurewebsites.net')]",
             "sslState": 0,
             "thumbprint": null,
             "ipBasedSslState": 0
           },
           {
-            "name": "[concat(variables('sites_name'),'.scm.azurewebsites.net')]",
+            "name": "[concat(variables('siteName'),'.scm.azurewebsites.net')]",
             "sslState": 0,
             "thumbprint": null,
             "ipBasedSslState": 0
@@ -119,8 +119,8 @@
           "name": "web",
           "type": "sourcecontrols",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', variables('sites_name'))]",
-            "[resourceId('Microsoft.Web/Sites/config', parameters('sites_name'), 'appsettings')]"
+            "[resourceId('Microsoft.Web/Sites', variables('siteName'))]",
+            "[resourceId('Microsoft.Web/Sites/config', parameters('siteName'), 'appsettings')]"
           ],
           "properties": {
             "RepoUrl": "[variables('repoUrl')]",
@@ -133,7 +133,7 @@
             "name": "appsettings",
             "type": "config",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/Sites', variables('sites_name') )]"
+                "[resourceId('Microsoft.Web/Sites', variables('siteName') )]"
             ],
             "properties": {
                "AzureWebJobsDashboard": "[Concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]",
