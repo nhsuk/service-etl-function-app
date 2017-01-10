@@ -1,12 +1,13 @@
 functionName=services-etl
 timeStamp=`date "+%Y%m%d%H%M%S"`
-baseName=`whoami`-dev-${functionName}-${timeStamp}
-resourceGroup=${baseName}
 region=uksouth
 currentRepoPath=`git rev-parse --show-toplevel`
 currentOrg=`git remote get-url origin | cut -f4 -d"/"`
 currentRepo=`git remote get-url origin | cut -f5 -d"/" | cut -f1 -d'.'`
 currentBranch=`git rev-parse --abbrev-ref HEAD`
+currentBranchSanitised=`echo $currentBranch | sed 's/\//_/g'`
+
+resourceGroup=${currentOrg}.${currentRepo}.${currentBranchSanitised}.`whoami`
 
 echo "Creating infrastructure for ${currentOrg}/${currentRepo}/${currentBranch}" 
 
