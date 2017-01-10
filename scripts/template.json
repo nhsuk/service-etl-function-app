@@ -1,0 +1,153 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "org": {
+      "type": "string"
+    },
+    "repo": { 
+      "type": "String"
+    },
+    "branch": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "hash": "[uniqueString(resourceGroup().id, deployment().name)]",
+    "storageAccountName": "[concat('storage', variables('hash'))]",
+    "databaseAccountName": "[concat('database', variables('hash'))]",
+    "location": "[resourceGroup().location]",
+    "serverFarmsName":  "[concat('plan', variables('hash'))]",
+    "siteName":  "[concat('site', variables('hash'))]",
+    "repoUrl": "[concat('https://github.com/', parameters('org'), '/', parameters('repo'), '.git')]",
+    "branch": "[parameters('branch')]",
+    "tags": {
+      "org": "[parameters('org')]",
+      "repo": "[parameters('repo')]",
+      "branch": "[parameters('branch')]"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "kind": "Storage",
+      "name": "[variables('storageAccountName')]",
+      "apiVersion": "2016-01-01",
+      "location":  "[variables('location')]",
+      "tags": "[variables('tags')]",
+      "properties": {},
+      "resources": [],
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "sku": {
+        "name": "Y1",
+        "tier": "Dynamic",
+        "size": "Y1",
+        "family": "Y",
+        "capacity": 0
+      },
+      "kind": "functionapp",
+      "name": "[variables('serverFarmsName')]",
+      "apiVersion": "2015-08-01",
+      "location":  "[variables('location')]",
+      "properties": {
+        "name": "[variables('serverFarmsName')]",
+        "numberOfWorkers": 0
+      },
+      "tags": "[variables('tags')]",
+      "resources": [],
+      "dependsOn": []
+    },
+    {
+      "apiVersion": "2015-04-08",
+      "type": "Microsoft.DocumentDb/databaseAccounts",
+      "name": "[variables('databaseAccountName')]",
+      "location":  "[variables('location')]",
+      "tags": "[variables('tags')]",
+      "properties": {
+        "databaseAccountOfferType": "Standard",
+        "ipRangeFilter": "",
+        "locations": [
+          {
+            "failoverPriority": 0,
+            "locationName":  "[variables('location')]"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "kind": "functionapp",
+      "name": "[variables('siteName')]",
+      "apiVersion": "2016-03-01",
+      "location":  "[variables('location')]",
+      "tags": "[variables('tags')]",
+      "properties": {
+        "name": "[variables('siteName')]",
+        "hostNames": [
+          "[concat(variables('siteName'),'.azurewebsites.net')]"
+        ],
+        "enabledHostNames": [
+          "[concat(variables('siteName'),'.azurewebsites.net')]",
+          "[concat(variables('siteName'),'.scm.azurewebsites.net')]"
+        ],
+        "hostNameSslStates": [
+          {
+            "name": "[concat(variables('siteName'),'.azurewebsites.net')]",
+            "sslState": 0,
+            "thumbprint": null,
+            "ipBasedSslState": 0
+          },
+          {
+            "name": "[concat(variables('siteName'),'.scm.azurewebsites.net')]",
+            "sslState": 0,
+            "thumbprint": null,
+            "ipBasedSslState": 0
+          }
+        ],
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('serverFarmsName'))]"
+      },
+      "resources": [
+        {
+          "apiVersion": "2016-03-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', variables('siteName'))]",
+            "[resourceId('Microsoft.Web/Sites/config', variables('siteName'), 'appsettings')]"
+          ],
+          "properties": {
+            "RepoUrl": "[variables('repoUrl')]",
+            "branch": "[replace(variables('branch'), '/', '\/')]",
+            "IsManualIntegration": false
+          }
+        },
+        {
+            "apiVersion": "2016-03-01",
+            "name": "appsettings",
+            "type": "config",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/Sites', variables('siteName') )]"
+            ],
+            "properties": {
+               "AzureWebJobsDashboard": "[Concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]",
+               "AzureWebJobsStorage": "[Concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]",
+               "WEBSITE_NODE_DEFAULT_VERSION": "6.5.0",
+               "FUNCTIONS_EXTENSION_VERSION": "~1",
+               "connecting-to-services_DOCUMENTDB": "[Concat('AccountEndpoint=https://', variables('databaseAccountName'), '.documents.azure.com:443/;AccountKey=', listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('databaseAccountName')), providers('Microsoft.DocumentDB', 'databaseAccounts').apiVersions[0]).secondaryMasterKey)]",
+               "connecting-to-services_STORAGE": "[Concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]"
+            }
+        }
+      ],
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('serverFarmsName'))]"
+      ]
+    }
+  ]
+}
