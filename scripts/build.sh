@@ -23,7 +23,7 @@ echo "Provisioning infrastructure for branch ${currentOrg}/${currentRepo}/${curr
 az group deployment create \
   --name "scripted-deployment-${timeStamp}" \
   --resource-group $resourceGroup \
-  --template-file ./master-template.json \
+  --template-file ./template.json \
   --parameters "{ \"org\": { \"value\": \"$currentOrg\" }, \"repo\": { \"value\": \"$currentRepo\" } , \"branch\": { \"value\": \"$currentBranch\" } }"
 
 storageAccountName=`az storage account list --resource-group ${resourceGroup} --output list --query '[].name'`

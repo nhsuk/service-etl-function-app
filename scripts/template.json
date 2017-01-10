@@ -120,12 +120,12 @@
           "type": "sourcecontrols",
           "dependsOn": [
             "[resourceId('Microsoft.Web/Sites', variables('siteName'))]",
-            "[resourceId('Microsoft.Web/Sites/config', parameters('siteName'), 'appsettings')]"
+            "[resourceId('Microsoft.Web/Sites/config', variables('siteName'), 'appsettings')]"
           ],
           "properties": {
             "RepoUrl": "[variables('repoUrl')]",
             "branch": "[replace(variables('branch'), '/', '\/')]",
-            "IsManualIntegration": true
+            "IsManualIntegration": false
           }
         },
         {
